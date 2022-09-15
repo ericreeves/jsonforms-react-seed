@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "title": "Consul Agent Configuration",
+  "properties": {
+    "ui": {
+      "type": "boolean",
+      "title": "UI?",
+      "description": "Enable the Consul Web UI?"
+    },
+    "if": {
+      "properties": {
+        "server": {
+          "type": "boolean"
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "datacenter": {
+          "type": "string",
+          "title": "Datacenter",
+          "description": "Datacenter ID for this Consul Instance"
+        },
+        "primary_datacenter": {
+          "type": "string",
+          "title": "Primary Datacenter",
+          "description": "Primary Datacenter of the Cluster"
+        }
+      }
+    },
+    "server": {
+      "type": "boolean",
+      "title": "Server?",
+      "description": "Is this a Consul server?  If not, it's a client."
+    },
+    "bootstrap_expect": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 7,
+      "title": "Bootstrap Expect",
+      "description": "Total number of Consul servers that must peer in order for the cluster to bootstrap"
+    },
+    "advertise_addr": {
+      "type": "string",
+      "title": "Advertise Address",
+      "description": "IP Address / Hostname to advertise to other Consul cluster peers (use if Consul is behind a load balancer or proxy)"
+    },
+    "data_dir": {
+      "type": "string",
+      "title": "Data Directory",
+      "description": "Local Filesystem Directory Used by Consul to Persist Data"
+    },
+    "client_addr": {
+      "type": "string",
+      "title": "Client Address",
+      "description": "Client address or something"
+    },
+    "node_name": {
+      "type": "string",
+      "title": "Node Name",
+      "description": "Human-Readable Node Name"
+    },
+    "log_level": {
+      "type": "string",
+      "enum": ["INFO", "WARN", "DEBUG"],
+      "title": "Log Level",
+      "description": "Log Verbosity Level"
+    }
+  }
+}
