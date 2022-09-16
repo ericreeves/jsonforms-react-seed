@@ -1,70 +1,108 @@
 {
-  "type": "object",
-  "title": "Consul Agent Configuration",
-  "properties": {
-    "ui": {
-      "type": "boolean",
-      "title": "UI?",
-      "description": "Enable the Consul Web UI?"
-    },
-    "if": {
-      "properties": {
-        "server": {
-          "type": "boolean"
-        }
-      }
-    },
-    "then": {
-      "properties": {
-        "datacenter": {
-          "type": "string",
-          "title": "Datacenter",
-          "description": "Datacenter ID for this Consul Instance"
+    "type": "object",
+    "title": "Consul Agent Configuration",
+    "properties": {
+        "node_name": {
+            "type": "string",
+            "title": "Node Name",
+            "info": ["Human-Readable Node Name"]
         },
-        "primary_datacenter": {
-          "type": "string",
-          "title": "Primary Datacenter",
-          "description": "Primary Datacenter of the Cluster"
+        "data_dir": {
+            "type": "string",
+            "title": "Data Directory",
+            "info": [
+                "Local Filesystem Directory Used by Consul to Persist Data"
+            ]
+        },
+        "advertise_addr": {
+            "type": "string",
+            "title": "Advertise Address",
+            "info": [
+                "IP Address / Hostname to advertise to other Consul cluster peers (use if Consul is behind a load balancer or proxy)"
+            ]
+        },
+        "client_addr": {
+            "type": "string",
+            "title": "Client Address",
+            "info": ["Client address or something"]
+        },
+        "log_level": {
+            "type": "string",
+            "widget": "Select",
+            "enum": ["INFO", "WARN", "DEBUG"],
+            "title": "Log Level",
+            "info": ["Log Verbosity Level"]
+        },
+        "ui": {
+            "type": "boolean",
+            "info": "Enable the Consul Web UI?",
+            "deleteOnEmpty": true
+        },
+        "server": {
+            "type": "object",
+            "properties": {
+                "server": {
+                    "type": "boolean",
+                    "deleteOnEmpty": true,
+                    "info": ["Is this a Consul server?  If not, it's a client."]
+                }
+            },
+            "dependentSchemas": {
+                "server": {
+                    "properties": {
+                        "bootstrap_expect": {
+                            "type": "number",
+                            "widget": "NumberSlider",
+                            "exclusiveMinimum": 0,
+                            "exclusiveMaximum": 8,
+                            "enum": [1, 3, 5, 6, 7],
+                            "view": {
+                                "marks": true,
+                                "marksLabel": " Nodes",
+                                "tooltip": "auto",
+                                "sizeXs": 10,
+                                "sizeMd": 8
+                            },
+                            "title": "Bootstrap Expect",
+                            "info": [
+                                "Total number of Consul servers that must peer in order for the cluster to bootstrap"
+                            ]
+                        },
+                        "datacenter": {
+                            "type": "string",
+                            "title": "Datacenter",
+                            "info": ["Datacenter ID for this Consul Instance"]
+                        },
+                        "primary_datacenter": {
+                            "type": "string",
+                            "title": "Primary Datacenter",
+                            "info": ["Primary Datacenter of the Cluster"]
+                        }
+                    }
+                }
+            }
+        },
+        "addresses": {
+            "type": "object",
+            "properties": {
+                "dns": {
+                    "type": "boolean",
+                    "deleteOnEmpty": true,
+                    "title": "Enable DNS Listener?"
+                }
+            },
+            "dependentSchemas": {
+                "dns": {
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "port": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
         }
-      }
-    },
-    "server": {
-      "type": "boolean",
-      "title": "Server?",
-      "description": "Is this a Consul server?  If not, it's a client."
-    },
-    "bootstrap_expect": {
-      "type": "number",
-      "minimum": 1,
-      "maximum": 7,
-      "title": "Bootstrap Expect",
-      "description": "Total number of Consul servers that must peer in order for the cluster to bootstrap"
-    },
-    "advertise_addr": {
-      "type": "string",
-      "title": "Advertise Address",
-      "description": "IP Address / Hostname to advertise to other Consul cluster peers (use if Consul is behind a load balancer or proxy)"
-    },
-    "data_dir": {
-      "type": "string",
-      "title": "Data Directory",
-      "description": "Local Filesystem Directory Used by Consul to Persist Data"
-    },
-    "client_addr": {
-      "type": "string",
-      "title": "Client Address",
-      "description": "Client address or something"
-    },
-    "node_name": {
-      "type": "string",
-      "title": "Node Name",
-      "description": "Human-Readable Node Name"
-    },
-    "log_level": {
-      "type": "string",
-      "enum": ["INFO", "WARN", "DEBUG"],
-      "title": "Log Level",
-      "description": "Log Verbosity Level"
     }
-  }
 }
